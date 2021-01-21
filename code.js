@@ -1,22 +1,26 @@
-function printj(n,m,k,a) {
+function printMinNumber(n,m,k,a) {
   var j=-1;
-  var step=j;
-  for(var i=0;i<n;i++){
-    var sum=0;
-    for(var p=i;p<n;p++){
-        sum=sum+a[p];
-    }
-    if(sum<=(m*k)){
-       step=i;
+  var sum=0;
+  for(var p=n-1;p>=0;p--){
+       sum=sum+a[p];
+	if(sum>(m*k)){
+       j=p+1;
        break;
     }
-  }  
+	if(a[p]>k){
+	 j=p+1;
+	 break;
+	}
+  }
+  if(j>=n){
+  return 0;
+  }
   var finish=false;
-  while(!finish && step<n) {
-    var end =step;
+  while(!finish && j<n) {
+    var end =j;
     var NumberOfPackages=m;
     while(NumberOfPackages!=0 && end<n){
-      var sum=0;
+       sum=0;
       for(var i=end;i<n;i++){
         sum=sum+a[i];
         end=i;
@@ -31,7 +35,7 @@ function printj(n,m,k,a) {
 		}
       }
 	  if((NumberOfPackages==0 && end<n) || NumberOfPackages<0){
-	    step++;
+	    j++;
 		break;
 	  }else if(end == n  && m>=0){
 	     finish=true;
@@ -39,9 +43,9 @@ function printj(n,m,k,a) {
 	  }
     }
   }
-  if(step<n){
-  j=step;
+  if(j<0){
+   return 0;
   }
-  return j;
+  return n-j;
 }
-document.write(printj(5,2,6,[4,6,7,2,5]));
+document.write(printMinNumber(5,1,4,[4,2,3,4,1]));
